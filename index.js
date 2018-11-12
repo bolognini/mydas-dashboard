@@ -31,16 +31,14 @@ app.get('/data', function(request, response) {
 
     let request = new sql.Request();
         
-    request.query('select * from dbo.Random', function (err, dbresponse) {
+    request.query('SELECT value, memoryuse FROM dbo.Random, dbo.Ram', function (err, dbresponse) {
         
       if (err) {
         console.error(err);
         return
       }
 
-      const value_map = Array.from(dbresponse.recordset.map(i => i.value))
-
-      response.send(value_map);
+      response.send(dbresponse.recordset);
     });
   });
 })

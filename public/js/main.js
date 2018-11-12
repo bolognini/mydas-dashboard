@@ -11,15 +11,10 @@
       method: "GET",
       url: "/data",
     }).done(function(data) {
-      points = data;
-    });
-
-    $.ajax({
-      cache: false,
-      method: "GET",
-      url: "/ram",
-    }).done(function(data) {
-      pointsRam = data;
+      data.forEach(x => {
+        points.push(x.value)
+        pointsRam.push(x.memoryuse)
+      })
     });
   }())
   
