@@ -31,7 +31,7 @@ app.get('/data', function(request, response) {
 
     let request = new sql.Request();
         
-    request.query('SELECT value, memoryuse FROM dbo.Random, dbo.Ram', function (err, dbresponse) {
+    request.query('SELECT * FROM dbo.Random', function (err, dbresponse) {
         
       if (err) {
         console.error(err);
@@ -53,16 +53,14 @@ app.get('/ram', function(request, response) {
 
     let requestRam = new sql.Request();
 
-    requestRam.query('SELECT * FROM dbo.Ram', function (err, dbresponse) {
+    requestRam.query('SELECT memoryuse FROM dbo.Ram', function (err, dbresponse) {
 
       if (err) {
         console.error(err);
         return
       }
-      
-      const value_ram = Array.from(dbresponse.recordset.map(i => i.memoryuse))
 
-      response.send(value_ram);
+      response.send(dbresponse.recordset);
     })
   })
 })
