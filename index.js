@@ -16,52 +16,57 @@ const config = {
 
 app.use(express.static(__dirname + '/public'));
 
+sql.close()
+sql.connect(config, function (err) {
+  if (err) {
+    console.error(err);
+    return
+  }
+})
+
 app.get('/', function(request, response) {
   response.sendFile(path.join(__dirname + '/index.html'));
 });
 
-app.get('/data', function(request, response) {
-  sql.close()
-  sql.connect(config, function (err) {
-  
+app.get('/cpu', function(request, response) {
+  let requestCpu = new sql.Request();
+      
+  requestCpu.query('SELECT value FROM dbo.Random', function (err, dbresponse) {
+      
     if (err) {
       console.error(err);
       return
     }
 
-    let request = new sql.Request();
-        
-    request.query('SELECT memoryuse FROM dbo.Ram', function (err, dbresponse) {
-        
-      if (err) {
-        console.error(err);
-        return
-      }
-
-      response.send(dbresponse.recordset);
-    });
+    response.send(dbresponse.recordset);
   });
 })
 
 app.get('/ram', function(request, response) {
-  sql.close()
-  sql.connect(config, function (err) {
+  let requestRam = new sql.Request();
+
+  requestRam.query('SELECT memoryuse FROM dbo.Ram', function (err, dbresponse) {
+
     if (err) {
       console.error(err);
       return
     }
 
-    let requestRam = new sql.Request();
+    response.send(dbresponse.recordset);
+  })
+})
 
-    requestRam.query('SELECT memoryuse FROM dbo.Ram', function (err, dbresponse) {
+app.get('/gpu', function(request, response) {
+  let requestGpu = new sql.Request();
 
-      if (err) {
-        console.error(err);
-        return
-      }
+  requestGpu.query('SELECT bytesread FROM dbo.hd', function (err, dbresponse) {
 
-      response.send(dbresponse.recordset);
-    })
+    if (err) {
+      console.error(err);
+      return
+    }
+
+    response.send(dbresponse.recordset);
   })
 })
 

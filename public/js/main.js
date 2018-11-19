@@ -1,19 +1,25 @@
 (function(){
   'use strict';
 
-  let points = [];
+  let pointsCpu = [];
   let pointsRam = [];
-  let myChart;
-  let myChart2;
+  let pointsGpu = [];
+  let pointsHd = [];
+  let pointsCorrelation =[];
+  let cpuChart;
+  let ramChart;
+  let gpuChart;
+  let hdChart;
+  let correlationChart;
 
   const initChart = function() {
-    var ctx = document.getElementById("myChart").getContext('2d');
+    var ctx = document.getElementById("cpuChart").getContext('2d');
     var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
     gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
     gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
     gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
-    myChart = new Chart(ctx, {
+    cpuChart = new Chart(ctx, {
       type: 'line',
       data: {
         labels: [],
@@ -36,6 +42,14 @@
         }]
       },
       options: {
+        layout: {
+          padding: {
+            left: 50,
+            right: 50,
+            top: 50,
+            bottom: 50
+          }
+        },
         legend: {
           display: false
         },
@@ -57,71 +71,242 @@
     });
   }
 
-  // const initChart2 = function() {
-  //   var ctx = document.getElementById("myChart2").getContext('2d');
-  //   myChart2 = new Chart(ctx, {
-  //     type: 'line',
-  //     data: {
-  //       labels: [],
-  //       datasets: [{
-  //         label: '# of Votes',
-  //         data: [],
-  //         backgroundColor: [
-  //           'rgba(255, 99, 132, 0.2)',
-  //           'rgba(54, 162, 235, 0.2)',
-  //           'rgba(255, 206, 86, 0.2)',
-  //           'rgba(75, 192, 192, 0.2)',
-  //           'rgba(153, 102, 255, 0.2)',
-  //           'rgba(255, 159, 64, 0.2)'
-  //         ],
-  //         borderColor: [
-  //           'rgba(255,99,132,1)',
-  //           'rgba(54, 162, 235, 1)',
-  //           'rgba(255, 206, 86, 1)',
-  //           'rgba(75, 192, 192, 1)',
-  //           'rgba(153, 102, 255, 1)',
-  //           'rgba(255, 159, 64, 1)'
-  //         ],
-  //         borderWidth: 1
-  //       }]
-  //     },
-  //     options: {
-  //       scales: {
-  //         yAxes: [{
-  //           ticks: {
-  //               beginAtZero:true
-  //           }
-  //         }]
-  //       }
-  //     }
-  //   });
-  // }
+  const initramChart = function() {
+    var ctx = document.getElementById("ramChart").getContext('2d');
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
-  axios.get('/data')
+    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
+    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
+    ramChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: '# of Votes',
+          data: [],
+          backgroundColor: gradientStroke,
+          borderColor: '#d346b1',
+          borderWidth: 2,
+          fill: true,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#d346b1',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#d346b1',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4
+        }]
+      },
+      options: {
+        layout: {
+          padding: {
+            left: 50,
+            right: 50,
+            top: 50,
+            bottom: 50
+          }
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          callbacks: {
+             label: function(tooltipItem) {
+                return tooltipItem.yLabel;
+            }
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero:true
+            }
+          }]
+        }
+      }
+    });
+  }
+  
+  const initgpuChart = function() {
+    var ctx = document.getElementById("gpuChart").getContext('2d');
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
+    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
+    gpuChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: '# of Votes',
+          data: [],
+          backgroundColor: gradientStroke,
+          borderColor: '#d346b1',
+          borderWidth: 2,
+          fill: true,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#d346b1',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#d346b1',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4
+        }]
+      },
+      options: {
+        layout: {
+          padding: {
+            left: 50,
+            right: 50,
+            top: 50,
+            bottom: 50
+          }
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          callbacks: {
+             label: function(tooltipItem) {
+                return tooltipItem.yLabel;
+            }
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero:true
+            }
+          }]
+        }
+      }
+    });
+  }
+
+  
+  axios.get('/cpu')
     .then(response => {
       return response.data
     })
     .then(data => {
-      points = data.map((item) => {
-        return item.memoryuse
+      pointsCpu = data.map((item) => {
+        return item.value
       })
-      console.log(points);
+      console.log(pointsCpu);
       
       initChart()
     })
     .catch(error => console.log(error))
 
-  // axios.get('/ram')
-  //   .then(response => {
-  //     return response.data
-  //   })
-  //   .then(data => {
-  //     pointsRam = data.map(function(item) {
-  //       return item.memoryuse
-  //     })
-  //     initChart2()
-  //   })
-  //   .catch(error => console.log(error))
+  axios.get('/ram')
+    .then(response => {
+      return response.data
+    })
+    .then(data => {
+      pointsRam = data.map(function(item) {
+        return item.memoryuse
+      })
+      initramChart()
+    })
+    .catch(error => console.log(error))
+  
+  axios.get('/gpu')
+    .then(response => {
+      return response.data
+    })
+    .then(data => {
+      pointsGpu = data.map(function(item) {
+        return item.bytesread
+      })
+      initgpuChart()
+    })
+    .catch(error => console.log(error))
+
+  // Bitcoin Quotation
+
+  axios.get('https://www.bitstamp.net/api/v2/ticker_hour/btcusd/')
+    .then(response => {
+      return response.data.last
+    })
+    .then(data => {
+      quotationBtc(data)
+    })
+    .catch(error => console.log(error))
+
+  
+  function quotationBtc(data) {
+    document.getElementById("btc").innerHTML = data; 
+  }
+
+  // Ripple Quotation
+
+  axios.get('https://www.bitstamp.net/api/v2/ticker_hour/xrpusd/')
+    .then(response => {
+      return response.data.last
+    })
+    .then(data => {
+      quotationXrp(data)
+    })
+    .catch(error => console.log(error))
+
+  
+  function quotationXrp(data) {
+    document.getElementById("xrp").innerHTML = data; 
+  }
+
+  // Litecoin Quotation
+
+  axios.get('https://www.bitstamp.net/api/v2/ticker_hour/ltcusd/')
+  .then(response => {
+    return response.data.last
+  })
+  .then(data => {
+    quotationLtc(data)
+  })
+  .catch(error => console.log(error))
+
+
+function quotationLtc(data) {
+  document.getElementById("ltc").innerHTML = data; 
+}
+
+// Ethereum Quotation
+
+axios.get('https://www.bitstamp.net/api/v2/ticker_hour/ethusd/')
+.then(response => {
+  return response.data.last
+})
+.then(data => {
+  quotationEth(data)
+})
+.catch(error => console.log(error))
+
+
+function quotationEth(data) {
+document.getElementById("eth").innerHTML = data; 
+}
+
+// BitcoinCash Quotation
+
+axios.get('https://www.bitstamp.net/api/v2/ticker_hour/bchusd/')
+.then(response => {
+  return response.data.last
+})
+.then(data => {
+  quotationBch(data)
+})
+.catch(error => console.log(error))
+
+
+function quotationBch(data) {
+document.getElementById("bch").innerHTML = data; 
+}
 
   function addData(chart, label, data) {
     chart.data.labels.push(label);
@@ -148,30 +333,43 @@
   }
 
   setInterval(function() {
-    if(points.length == 0) {
+    if(pointsCpu.length == 0) {
       return;
     }
 
-    if(myChart.data.datasets[0].data.length > 40 ) {
-      shiftData(myChart)
+    if(cpuChart.data.datasets[0].data.length > 40 ) {
+      shiftData(cpuChart)
     }
 
-    addData(myChart, '', points.shift())
+    addData(cpuChart, '', pointsCpu.shift())
 
   }, 100)
 
-  // setInterval(function() {
-  //   if(pointsRam.length == 0) {
-  //     return;
-  //   }
+  setInterval(function() {
+    if(pointsRam.length == 0) {
+      return;
+    }
 
-  //   if(myChart2.data.datasets[0].data.length > 40 ) {
-  //     shiftData(myChart2)
-  //   }
+    if(ramChart.data.datasets[0].data.length > 40 ) {
+      shiftData(ramChart)
+    }
 
-  //   addData(myChart2, '', pointsRam.shift())
+    addData(ramChart, '', pointsRam.shift())
 
-  // }, 100)
+  }, 100)
+  
+  setInterval(function() {
+    if(pointsGpu.length == 0) {
+      return;
+    }
+
+    if(gpuChart.data.datasets[0].data.length > 40 ) {
+      shiftData(gpuChart)
+    }
+
+    addData(gpuChart, '', pointsGpu.shift())
+
+  }, 100)
 
 
   const showDropdownMenu = () => {

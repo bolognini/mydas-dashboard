@@ -14,8 +14,9 @@
   <body>
     <nav>
       <div class="dropdown" id="dropdown-trigger"></div>
+      <div class="menu-arrow"></div>
       <div class="dropdown-content" id="icon-menu">
-        <a href="#">Log out</a>
+        <a href="#" class="dropdown-link">Log out</a>
       </div>
     </nav>
     <section class="dashboard-wrapper">
@@ -27,42 +28,69 @@
         <ul class="quotation-list">
           <li class="quotation-item">
             <img src="img/btc.svg" alt="Bitcoin Icon">
-            <p class="quotation-text">BTC - USD 3,688</p>
+            <p class="quotation-text">
+                1 BTC: US$
+              <span id="btc"></span>
+            </p>
           </li>
           <li class="quotation-item">
             <img src="img/xrp.svg" alt="Ripple Icon">
-            <p class="quotation-text">XRP - USD 3,688</p>
+            <p class="quotation-text">
+                1 XRP: US$
+              <span id="xrp"></span>
+            </p>
           </li>
           <li class="quotation-item">
             <img src="img/ltc.svg" alt="Litecoin Icon">
-            <p class="quotation-text">LTC - USD 3,688</p>
+            <p class="quotation-text">
+                1 LTC: US$
+              <span id="ltc"></span>
+            </p>
           </li>
           <li class="quotation-item">
             <img src="img/eth.svg" alt="Ethereum Icon">
-            <p class="quotation-text">ETH - USD 3,688</p>
+            <p class="quotation-text">
+                1 ETH: US$
+              <span id="eth"></span>
+            </p>
           </li>
           <li class="quotation-item">
             <img src="img/bch.svg" alt="Bitcoin Cash Icon">
-            <p class="quotation-text">BCH - USD 3,688</p>
+            <p class="quotation-text">
+                1 BCH: US$
+              <span id="bch"></span>
+            </p>
           </li>
         </ul>
       </aside>
       <section class="graphic-wrapper">
         <div class="main-chart">
-          <div class="chart-card">
-            <h5 class="chart-card__title">Performance</h5>
-            <canvas id="myChart"></canvas>
+          <div class="main-chart__card">
+            <h5 class="chart-card__title">Dados da máquina</h5>
+            <h2 class="chart-card__subtitle">Performance da CPU</h2>
+            <canvas id="cpuChart"></canvas>
           </div>
         </div>
         <div class="sub-chart">
-          <div style="width: 100px; height: 100px; background-color: cyan;"></div>
-          <div style="width: 100px; height: 100px; background-color: tomato;"></div>
-          <div style="width: 100px; height: 100px; background-color: palevioletred;"></div>
-          <div style="width: 100px; height: 100px; background-color: darkslateblue;"></div>
+          <div class="sub-chart__card">
+            <h2 class="chart-card__subtitle">Performance da RAM</h2>
+            <canvas id="ramChart"></canvas>
+          </div>
+          <div class="sub-chart__card">
+            <h2 class="chart-card__subtitle">Performance da GPU</h2>
+            <canvas id="gpuChart"></canvas>
+          </div>
+          <!-- <div class="sub-chart__card">
+            <h2 class="chart-card__subtitle">Performance da RAM</h2>
+            <canvas id="hdChart"></canvas>
+          </div>
+          <div class="sub-chart__card">
+            <h2 class="chart-card__subtitle">Performance da RAM</h2>
+            <canvas id="correlationChart"></canvas>
+          </div> -->
         </div>
       </section>
     </section>
-    <!-- <canvas id="myChart2"></canvas> -->
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
