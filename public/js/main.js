@@ -1,70 +1,387 @@
 (function(){
   'use strict';
 
-  let points = [];
+  let pointsCpu = [];
   let pointsRam = [];
-  let cnt = 0;
+  let pointsGpu = [];
+  let pointsHd = [];
+  let pointsCorrelation =[];
+  let cpuChart;
+  let ramChart;
+  let gpuChart;
+  let hdChart;
+  let correlationChart;
 
-  (function getData() {
-    $.ajax({
-      cache: false,
-      method: "GET",
-      url: "/data",
-    }).done(function(data) {
-      points = data;
+  const initChart = function() {
+    var ctx = document.getElementById("cpuChart").getContext('2d');
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
+    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
+    cpuChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: '# of Votes',
+          data: [],
+          backgroundColor: gradientStroke,
+          borderColor: '#d346b1',
+          borderWidth: 2,
+          fill: true,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#d346b1',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#d346b1',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4
+        }]
+      },
+      options: {
+        layout: {
+          padding: {
+            left: 50,
+            right: 50,
+            top: 50,
+            bottom: 50
+          }
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          callbacks: {
+             label: function(tooltipItem) {
+                return tooltipItem.yLabel;
+            }
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero:true
+            }
+          }]
+        }
+      }
     });
+  }
 
-    $.ajax({
-      cache: false,
-      method: "GET",
-      url: "/ram",
-    }).done(function(data) {
-      pointsRam = data;
+  const initramChart = function() {
+    var ctx = document.getElementById("ramChart").getContext('2d');
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
+    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
+    ramChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: '# of Votes',
+          data: [],
+          backgroundColor: gradientStroke,
+          borderColor: '#d346b1',
+          borderWidth: 2,
+          fill: true,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#d346b1',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#d346b1',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4
+        }]
+      },
+      options: {
+        layout: {
+          padding: {
+            left: 50,
+            right: 50,
+            top: 50,
+            bottom: 50
+          }
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          callbacks: {
+             label: function(tooltipItem) {
+                return tooltipItem.yLabel;
+            }
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero:true
+            }
+          }]
+        }
+      }
     });
-  }())
+  }
   
-  Plotly.plot('chart', [{
-    y: [0],
-    type: 'line'
-  }]);
+  const initgpuChart = function() {
+    var ctx = document.getElementById("gpuChart").getContext('2d');
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
-  Plotly.plot('chart2', [{
-    y: [0],
-    type: 'line'
-  }]);
+    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
+    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
+    gpuChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: '# of Votes',
+          data: [],
+          backgroundColor: gradientStroke,
+          borderColor: '#d346b1',
+          borderWidth: 2,
+          fill: true,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#d346b1',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#d346b1',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4
+        }]
+      },
+      options: {
+        layout: {
+          padding: {
+            left: 50,
+            right: 50,
+            top: 50,
+            bottom: 50
+          }
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          callbacks: {
+             label: function(tooltipItem) {
+                return tooltipItem.yLabel;
+            }
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero:true
+            }
+          }]
+        }
+      }
+    });
+  }
+
   
+  axios.get('/cpu')
+    .then(response => {
+      return response.data
+    })
+    .then(data => {
+      pointsCpu = data.map((item) => {
+        return item.value
+      })
+      console.log(pointsCpu);
+      
+      initChart()
+    })
+    .catch(error => console.log(error))
+
+  axios.get('/ram')
+    .then(response => {
+      return response.data
+    })
+    .then(data => {
+      pointsRam = data.map(function(item) {
+        return item.memoryuse
+      })
+      initramChart()
+    })
+    .catch(error => console.log(error))
+  
+  axios.get('/gpu')
+    .then(response => {
+      return response.data
+    })
+    .then(data => {
+      pointsGpu = data.map(function(item) {
+        return item.bytesread
+      })
+      initgpuChart()
+    })
+    .catch(error => console.log(error))
+
+  // Bitcoin Quotation
+
+  axios.get('https://www.bitstamp.net/api/v2/ticker_hour/btcusd/')
+    .then(response => {
+      return response.data.last
+    })
+    .then(data => {
+      quotationBtc(data)
+    })
+    .catch(error => console.log(error))
+
+  
+  function quotationBtc(data) {
+    document.getElementById("btc").innerHTML = data; 
+  }
+
+  // Ripple Quotation
+
+  axios.get('https://www.bitstamp.net/api/v2/ticker_hour/xrpusd/')
+    .then(response => {
+      return response.data.last
+    })
+    .then(data => {
+      quotationXrp(data)
+    })
+    .catch(error => console.log(error))
+
+  
+  function quotationXrp(data) {
+    document.getElementById("xrp").innerHTML = data; 
+  }
+
+  // Litecoin Quotation
+
+  axios.get('https://www.bitstamp.net/api/v2/ticker_hour/ltcusd/')
+  .then(response => {
+    return response.data.last
+  })
+  .then(data => {
+    quotationLtc(data)
+  })
+  .catch(error => console.log(error))
+
+
+function quotationLtc(data) {
+  document.getElementById("ltc").innerHTML = data; 
+}
+
+// Ethereum Quotation
+
+axios.get('https://www.bitstamp.net/api/v2/ticker_hour/ethusd/')
+.then(response => {
+  return response.data.last
+})
+.then(data => {
+  quotationEth(data)
+})
+.catch(error => console.log(error))
+
+
+function quotationEth(data) {
+document.getElementById("eth").innerHTML = data; 
+}
+
+// BitcoinCash Quotation
+
+axios.get('https://www.bitstamp.net/api/v2/ticker_hour/bchusd/')
+.then(response => {
+  return response.data.last
+})
+.then(data => {
+  quotationBch(data)
+})
+.catch(error => console.log(error))
+
+
+function quotationBch(data) {
+document.getElementById("bch").innerHTML = data; 
+}
+
+  function addData(chart, label, data) {
+    chart.data.labels.push(label);
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.push(data);
+    });
+    chart.update(0);
+  }
+
+  function removeData(chart) {
+    chart.data.labels.pop();
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.pop();
+    });
+    chart.update(0);
+  }
+
+  function shiftData(chart) {
+    chart.data.labels.shift();
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.shift();
+    });
+    chart.update(0);
+  }
+
   setInterval(function() {
-    if(points.length == 0){
+    if(pointsCpu.length == 0) {
       return;
     }
-    
-    Plotly.extendTraces('chart', { y: [[points.shift()]] }, [0]);
-    cnt++;
-    
-    if(cnt > 30) {
-      Plotly.relayout('chart', {
-        xaxis: {
-          range: [cnt-30,cnt]
-        }
-      })
+
+    if(cpuChart.data.datasets[0].data.length > 40 ) {
+      shiftData(cpuChart)
     }
-  }, 100);
+
+    addData(cpuChart, '', pointsCpu.shift())
+
+  }, 100)
 
   setInterval(function() {
     if(pointsRam.length == 0) {
       return;
     }
 
-    Plotly.extendTraces('chart2', { y: [[pointsRam.shift()]] }, [0]);
-    cnt++;
-
-    if(cnt > 30) {
-      Plotly.relayout('chart2', {
-        xaxis: {
-          range: [cnt-30,cnt]
-        }
-      })
+    if(ramChart.data.datasets[0].data.length > 40 ) {
+      shiftData(ramChart)
     }
+
+    addData(ramChart, '', pointsRam.shift())
+
+  }, 100)
+  
+  setInterval(function() {
+    if(pointsGpu.length == 0) {
+      return;
+    }
+
+    if(gpuChart.data.datasets[0].data.length > 40 ) {
+      shiftData(gpuChart)
+    }
+
+    addData(gpuChart, '', pointsGpu.shift())
+
   }, 100)
 
+
+  const showDropdownMenu = () => {
+    var element = document.getElementById('icon-menu');
+    element.classList.add("show-dropdown-content");
+  }
+
+  const removeDropdownMenu = () => {
+    var element = document.getElementById('icon-menu');
+    element.classList.remove("show-dropdown-content");
+  }
+
+  document.getElementById('dropdown-trigger').addEventListener('mouseover', showDropdownMenu)
+  document.getElementById('dropdown-trigger').addEventListener('mouseout', removeDropdownMenu)
 })();
