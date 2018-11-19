@@ -3,25 +3,16 @@
 
   let points = [];
   let pointsRam = [];
-  let cnt = 0;
   let myChart;
-
-  // (function getData() {
-  //   $.ajax({
-  //     cache: false,
-  //     method: "GET",
-  //     url: "/data",
-  //   }).done(function(data) {
-  //     data.forEach(x => {
-  //       points.push(x.value)
-  //       pointsRam.push(x.memoryuse)
-  //     })
-  //   });
-  // }())
+  let myChart2;
 
   const initChart = function() {
-    // console.log(pointsRam);
     var ctx = document.getElementById("myChart").getContext('2d');
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
+    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
     myChart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -29,30 +20,36 @@
         datasets: [{
           label: '# of Votes',
           data: [],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
+          backgroundColor: gradientStroke,
+          borderColor: '#d346b1',
+          borderWidth: 2,
+          fill: true,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#d346b1',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#d346b1',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4
         }]
       },
       options: {
+        legend: {
+          display: false
+        },
+        tooltips: {
+          callbacks: {
+             label: function(tooltipItem) {
+                return tooltipItem.yLabel;
+            }
+          }
+        },
         scales: {
           yAxes: [{
             ticks: {
-                beginAtZero:true
+              beginAtZero:true
             }
           }]
         }
@@ -60,16 +57,53 @@
     });
   }
 
+  // const initChart2 = function() {
+  //   var ctx = document.getElementById("myChart2").getContext('2d');
+  //   myChart2 = new Chart(ctx, {
+  //     type: 'line',
+  //     data: {
+  //       labels: [],
+  //       datasets: [{
+  //         label: '# of Votes',
+  //         data: [],
+  //         backgroundColor: [
+  //           'rgba(255, 99, 132, 0.2)',
+  //           'rgba(54, 162, 235, 0.2)',
+  //           'rgba(255, 206, 86, 0.2)',
+  //           'rgba(75, 192, 192, 0.2)',
+  //           'rgba(153, 102, 255, 0.2)',
+  //           'rgba(255, 159, 64, 0.2)'
+  //         ],
+  //         borderColor: [
+  //           'rgba(255,99,132,1)',
+  //           'rgba(54, 162, 235, 1)',
+  //           'rgba(255, 206, 86, 1)',
+  //           'rgba(75, 192, 192, 1)',
+  //           'rgba(153, 102, 255, 1)',
+  //           'rgba(255, 159, 64, 1)'
+  //         ],
+  //         borderWidth: 1
+  //       }]
+  //     },
+  //     options: {
+  //       scales: {
+  //         yAxes: [{
+  //           ticks: {
+  //               beginAtZero:true
+  //           }
+  //         }]
+  //       }
+  //     }
+  //   });
+  // }
+
   axios.get('/data')
     .then(response => {
       return response.data
     })
     .then(data => {
-      // data.forEach(i => {
-      //   points.push(i.id)
-      // })
       points = data.map((item) => {
-        return item.value
+        return item.memoryuse
       })
       console.log(points);
       
@@ -77,45 +111,17 @@
     })
     .catch(error => console.log(error))
 
-    // axios.get('/ram')
-    // .then(response => {
-    //   return response.data
-    // })
-    // .then(data => {
-    //   // pointsRam = data.map(function(item) {
-    //   //   return item.memoryuse
-    //   // })
-    //   // // initChart()
-    // })
-    // .catch(error => console.log(error))
-
-  
-  // Plotly.plot('chart', [{
-  //   y: [0],
-  //   type: 'line'
-  // }]);
-
-  // Plotly.plot('chart2', [{
-  //   y: [0],
-  //   type: 'line'
-  // }]);
-  
-  // setInterval(function() {
-  //   if(points.length == 0){
-  //     return;
-  //   }
-    
-  //   Plotly.extendTraces('chart', { y: [[points.shift()]] }, [0]);
-  //   cnt++;
-    
-  //   if(cnt > 30) {
-  //     Plotly.relayout('chart', {
-  //       xaxis: {
-  //         range: [cnt-30,cnt]
-  //       }
+  // axios.get('/ram')
+  //   .then(response => {
+  //     return response.data
+  //   })
+  //   .then(data => {
+  //     pointsRam = data.map(function(item) {
+  //       return item.memoryuse
   //     })
-  //   }
-  // }, 100);
+  //     initChart2()
+  //   })
+  //   .catch(error => console.log(error))
 
   function addData(chart, label, data) {
     chart.data.labels.push(label);
@@ -146,17 +152,6 @@
       return;
     }
 
-    // Plotly.extendTraces('chart2', { y: [[pointsRam.shift()]] }, [0]);
-    // cnt++;
-
-    // if(cnt > 30) {
-    //   Plotly.relayout('chart2', {
-    //     xaxis: {
-    //       range: [cnt-30,cnt]
-    //     }
-    //   })
-    // }
-    
     if(myChart.data.datasets[0].data.length > 40 ) {
       shiftData(myChart)
     }
@@ -165,4 +160,30 @@
 
   }, 100)
 
+  // setInterval(function() {
+  //   if(pointsRam.length == 0) {
+  //     return;
+  //   }
+
+  //   if(myChart2.data.datasets[0].data.length > 40 ) {
+  //     shiftData(myChart2)
+  //   }
+
+  //   addData(myChart2, '', pointsRam.shift())
+
+  // }, 100)
+
+
+  const showDropdownMenu = () => {
+    var element = document.getElementById('icon-menu');
+    element.classList.add("show-dropdown-content");
+  }
+
+  const removeDropdownMenu = () => {
+    var element = document.getElementById('icon-menu');
+    element.classList.remove("show-dropdown-content");
+  }
+
+  document.getElementById('dropdown-trigger').addEventListener('mouseover', showDropdownMenu)
+  document.getElementById('dropdown-trigger').addEventListener('mouseout', removeDropdownMenu)
 })();

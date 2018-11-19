@@ -31,7 +31,7 @@ app.get('/data', function(request, response) {
 
     let request = new sql.Request();
         
-    request.query('SELECT * FROM dbo.Random', function (err, dbresponse) {
+    request.query('SELECT memoryuse FROM dbo.Ram', function (err, dbresponse) {
         
       if (err) {
         console.error(err);

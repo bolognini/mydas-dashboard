@@ -5,16 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
   </head>
   <body>
-    <canvas id="myChart"></canvas>
-    <!-- <div id="chart"></div> -->
-    <div id="chart2"></div>
+    <nav>
+      <div class="dropdown" id="dropdown-trigger"></div>
+      <div class="dropdown-content" id="icon-menu">
+        <a href="#">Log out</a>
+      </div>
+    </nav>
+    <section class="dashboard-wrapper">
+      <aside class="sidebar">
+        <div class="logo-wrapper">
+          <a href="#" class="mydas-logo"></a>
+        </div>
+        <span class="line"></span>
+        <ul class="quotation-list">
+          <li class="quotation-item">
+            <img src="img/btc.svg" alt="Bitcoin Icon">
+            <p class="quotation-text">BTC - USD 3,688</p>
+          </li>
+          <li class="quotation-item">
+            <img src="img/xrp.svg" alt="Ripple Icon">
+            <p class="quotation-text">XRP - USD 3,688</p>
+          </li>
+          <li class="quotation-item">
+            <img src="img/ltc.svg" alt="Litecoin Icon">
+            <p class="quotation-text">LTC - USD 3,688</p>
+          </li>
+          <li class="quotation-item">
+            <img src="img/eth.svg" alt="Ethereum Icon">
+            <p class="quotation-text">ETH - USD 3,688</p>
+          </li>
+          <li class="quotation-item">
+            <img src="img/bch.svg" alt="Bitcoin Cash Icon">
+            <p class="quotation-text">BCH - USD 3,688</p>
+          </li>
+        </ul>
+      </aside>
+      <section class="graphic-wrapper">
+        <div class="main-chart">
+          <div class="chart-card">
+            <h5 class="chart-card__title">Performance</h5>
+            <canvas id="myChart"></canvas>
+          </div>
+        </div>
+        <div class="sub-chart">
+          <div style="width: 100px; height: 100px; background-color: cyan;"></div>
+          <div style="width: 100px; height: 100px; background-color: tomato;"></div>
+          <div style="width: 100px; height: 100px; background-color: palevioletred;"></div>
+          <div style="width: 100px; height: 100px; background-color: darkslateblue;"></div>
+        </div>
+      </section>
+    </section>
+    <!-- <canvas id="myChart2"></canvas> -->
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.42.5/plotly.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/main.js"></script>

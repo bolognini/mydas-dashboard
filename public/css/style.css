@@ -1,3 +1,115 @@
 body {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #525f7f;
+  text-align: left;
+  background-color: #1e1e2f;
+  border-top: 2px solid #e14eca;
+}
+
+.dashboard-wrapper {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  padding: 20px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  vertical-align: middle;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-image: url(../img/anime3.png);
+  background-position: center;
+  background-size: cover;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.show-dropdown-content {
+  display: block;
+}
+
+.sidebar {
+  background: linear-gradient(0deg, #ba54f5 0%, #e14eca 100%);
+  margin: 10px 10px 0 0;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.logo-wrapper {
+  margin-bottom: 10px;
+}
+
+.line {
+  display: block;
+  height: 1px;
+  width: 140px;
   background-color: #eee;
+  margin: 5px auto;
+}
+
+.mydas-logo {
+  width: 100%;
+  background-image: url(/img/mydas-logo.png);
+  display: block;
+  height: 50px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.quotation-list {
+  margin: 0;
+  padding: 0 15px;
+}
+
+.quotation-item {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-gap: 10px;
+  margin: 20px 0;
+  color: #eee;
+}
+
+.quotation-text {
+  text-align: center;
+  margin: auto 0;
+}
+
+.graphic-wrapper {
+  padding: 10px;
+}
+
+.main-chart {
+
+}
+
+.sub-chart {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+}
+
+.chart-card {
+  background-color: #27293d;
+  padding: 10px;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.chart-card__title {
+  color: #9A9A9A;
 }
