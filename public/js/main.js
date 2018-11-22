@@ -12,7 +12,7 @@
   let hdChart;
   let correlationChart;
 
-  const initChart = function() {
+  const initCpuChart = function() {
     var ctx = document.getElementById("cpuChart").getContext('2d');
     var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
@@ -71,7 +71,7 @@
     });
   }
 
-  const initramChart = function() {
+  const initRamChart = function() {
     var ctx = document.getElementById("ramChart").getContext('2d');
     var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
@@ -130,7 +130,7 @@
     });
   }
   
-  const initgpuChart = function() {
+  const initGpuChart = function() {
     var ctx = document.getElementById("gpuChart").getContext('2d');
     var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
@@ -189,6 +189,123 @@
     });
   }
 
+  const initHdChart = function() {
+    var ctx = document.getElementById("hdChart").getContext('2d');
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
+    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
+    hdChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: '# of Votes',
+          data: [],
+          backgroundColor: gradientStroke,
+          borderColor: '#d346b1',
+          borderWidth: 2,
+          fill: true,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#d346b1',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#d346b1',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4
+        }]
+      },
+      options: {
+        layout: {
+          padding: {
+            left: 50,
+            right: 50,
+            top: 50,
+            bottom: 50
+          }
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          callbacks: {
+             label: function(tooltipItem) {
+                return tooltipItem.yLabel;
+            }
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero:true
+            }
+          }]
+        }
+      }
+    });
+  }
+
+  const initCorrelationChart = function() {
+    var ctx = document.getElementById("correlationChart").getContext('2d');
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
+    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
+    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
+    correlationChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label: '# of Votes',
+          data: [],
+          backgroundColor: gradientStroke,
+          borderColor: '#d346b1',
+          borderWidth: 2,
+          fill: true,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#d346b1',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#d346b1',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4
+        }]
+      },
+      options: {
+        layout: {
+          padding: {
+            left: 50,
+            right: 50,
+            top: 50,
+            bottom: 50
+          }
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          callbacks: {
+             label: function(tooltipItem) {
+                return tooltipItem.yLabel;
+            }
+          }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero:true
+            }
+          }]
+        }
+      }
+    });
+  }
   
   axios.get('/cpu')
     .then(response => {
@@ -196,11 +313,11 @@
     })
     .then(data => {
       pointsCpu = data.map((item) => {
-        return item.value
+        return item.currentuse
       })
       console.log(pointsCpu);
       
-      initChart()
+      initCpuChart()
     })
     .catch(error => console.log(error))
 
@@ -212,7 +329,7 @@
       pointsRam = data.map(function(item) {
         return item.memoryuse
       })
-      initramChart()
+      initRamChart()
     })
     .catch(error => console.log(error))
   
@@ -224,7 +341,31 @@
       pointsGpu = data.map(function(item) {
         return item.bytesread
       })
-      initgpuChart()
+      initGpuChart()
+    })
+    .catch(error => console.log(error))
+  
+  axios.get('/hd')
+    .then(response => {
+      return response.data
+    })
+    .then(data => {
+      pointsHd = data.map(function(item) {
+        return item.bytesread
+      })
+      initHdChart()
+    })
+    .catch(error => console.log(error))
+
+  axios.get('/correlation')
+    .then(response => {
+      return response.data
+    })
+    .then(data => {
+      pointsCorrelation = data.map(function(item) {
+        return item.bytesread
+      })
+      initCorrelationChart()
     })
     .catch(error => console.log(error))
 
@@ -368,6 +509,32 @@ document.getElementById("bch").innerHTML = data;
     }
 
     addData(gpuChart, '', pointsGpu.shift())
+
+  }, 100)
+
+  setInterval(function() {
+    if(pointsHd.length == 0) {
+      return;
+    }
+
+    if(hdChart.data.datasets[0].data.length > 40 ) {
+      shiftData(hdChart)
+    }
+
+    addData(hdChart, '', pointsHd.shift())
+
+  }, 100)
+
+  setInterval(function() {
+    if(pointsCorrelation.length == 0) {
+      return;
+    }
+
+    if(correlationChart.data.datasets[0].data.length > 40 ) {
+      shiftData(correlationChart)
+    }
+
+    addData(correlationChart, '', pointsCorrelation.shift())
 
   }, 100)
 
