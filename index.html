@@ -13,10 +13,12 @@
   </head>
   <body>
     <nav>
-      <div class="dropdown" id="dropdown-trigger"></div>
-      <div class="menu-arrow"></div>
-      <div class="dropdown-content" id="icon-menu">
-        <a href="#" class="dropdown-link">Log out</a>
+      <div class="nav__wrapper">
+        <div class="dropdown" id="dropdown-trigger"></div>
+        <div class="menu-arrow"></div>
+        <div class="dropdown-content" id="icon-menu">
+          <a href="#" class="dropdown-link">Log out</a>
+        </div>
       </div>
     </nav>
     <section class="dashboard-wrapper">
@@ -68,25 +70,35 @@
           <div class="main-chart__card">
             <h5 class="chart-card__title">Dados da máquina</h5>
             <h2 class="chart-card__subtitle">Performance da CPU</h2>
-            <canvas id="cpuChart"></canvas>
+            <div class="chart-holder">
+              <canvas id="cpuChart"></canvas>
+            </div>
           </div>
         </div>
         <div class="sub-chart">
           <div class="sub-chart__card">
-            <h2 class="chart-card__subtitle">Performance da RAM</h2>
-            <canvas id="ramChart"></canvas>
+            <h2 class="chart-card__subtitle">Uso da RAM</h2>
+            <div class="subchart-holder">
+              <canvas id="ramChart"></canvas>
+            </div>
           </div>
           <div class="sub-chart__card">
-            <h2 class="chart-card__subtitle">Performance da GPU</h2>
-            <canvas id="gpuChart"></canvas>
+            <h2 class="chart-card__subtitle">Uso da GPU</h2>
+            <div class="subchart-holder">
+              <canvas id="gpuChart"></canvas>
+            </div>
           </div>
           <div class="sub-chart__card">
-            <h2 class="chart-card__subtitle">Performance da HD</h2>
-            <canvas id="hdChart"></canvas>
+            <h2 class="chart-card__subtitle">Uso do HD</h2>
+            <div class="subchart-holder">
+              <canvas id="hdChart"></canvas>
+            </div>
           </div>
           <div class="sub-chart__card">
-            <h2 class="chart-card__subtitle">Correlação</h2>
-            <canvas id="correlationChart"></canvas>
+            <h2 class="chart-card__subtitle">Downtime</h2>
+            <div class="subchart-holder">
+              <canvas id="correlationChart"></canvas>
+            </div>
           </div>
         </div>
       </section>

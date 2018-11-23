@@ -38,18 +38,11 @@
           pointBorderWidth: 20,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
-          pointRadius: 4
+          pointRadius: 3
         }]
       },
+      responsive: true,
       options: {
-        layout: {
-          padding: {
-            left: 50,
-            right: 50,
-            top: 50,
-            bottom: 50
-          }
-        },
         legend: {
           display: false
         },
@@ -97,18 +90,10 @@
           pointBorderWidth: 20,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
-          pointRadius: 4
+          pointRadius: 3
         }]
       },
       options: {
-        layout: {
-          padding: {
-            left: 50,
-            right: 50,
-            top: 50,
-            bottom: 50
-          }
-        },
         legend: {
           display: false
         },
@@ -156,18 +141,10 @@
           pointBorderWidth: 20,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
-          pointRadius: 4
+          pointRadius: 3
         }]
       },
       options: {
-        layout: {
-          padding: {
-            left: 50,
-            right: 50,
-            top: 50,
-            bottom: 50
-          }
-        },
         legend: {
           display: false
         },
@@ -215,18 +192,10 @@
           pointBorderWidth: 20,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
-          pointRadius: 4
+          pointRadius: 3
         }]
       },
       options: {
-        layout: {
-          padding: {
-            left: 50,
-            right: 50,
-            top: 50,
-            bottom: 50
-          }
-        },
         legend: {
           display: false
         },
@@ -274,18 +243,10 @@
           pointBorderWidth: 20,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
-          pointRadius: 4
+          pointRadius: 3
         }]
       },
       options: {
-        layout: {
-          padding: {
-            left: 50,
-            right: 50,
-            top: 50,
-            bottom: 50
-          }
-        },
         legend: {
           display: false
         },
@@ -313,7 +274,7 @@
     })
     .then(data => {
       pointsCpu = data.map((item) => {
-        return item.currentuse
+        return item.value
       })
       console.log(pointsCpu);
       
@@ -327,7 +288,7 @@
     })
     .then(data => {
       pointsRam = data.map(function(item) {
-        return item.memoryuse
+        return item.value
       })
       initRamChart()
     })
@@ -339,7 +300,7 @@
     })
     .then(data => {
       pointsGpu = data.map(function(item) {
-        return item.bytesread
+        return item.value
       })
       initGpuChart()
     })
@@ -351,7 +312,7 @@
     })
     .then(data => {
       pointsHd = data.map(function(item) {
-        return item.bytesread
+        return item.value
       })
       initHdChart()
     })
@@ -363,7 +324,7 @@
     })
     .then(data => {
       pointsCorrelation = data.map(function(item) {
-        return item.bytesread
+        return item.value
       })
       initCorrelationChart()
     })
@@ -549,6 +510,6 @@ document.getElementById("bch").innerHTML = data;
     element.classList.remove("show-dropdown-content");
   }
 
-  document.getElementById('dropdown-trigger').addEventListener('mouseover', showDropdownMenu)
-  document.getElementById('dropdown-trigger').addEventListener('mouseout', removeDropdownMenu)
+  document.getElementById('dropdown-trigger').addEventListener('click', showDropdownMenu)
+  document.getElementById('dropdown-trigger').addEventListener('mouseover', removeDropdownMenu)
 })();

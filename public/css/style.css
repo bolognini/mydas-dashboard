@@ -16,9 +16,13 @@ body {
 }
 
 nav {
-  margin: 10px;
+  margin: 20px 30px 0 15px;
+}
+
+.nav__wrapper {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
+  margin: 10px 30px 0 0;
 }
 
 .menu-arrow {
@@ -126,6 +130,14 @@ nav {
   margin-top: 20px;
 }
 
+.chart-holder {
+  padding: 50px;
+}
+
+.subchart-holder {
+  padding: 20px;
+}
+
 .main-chart__card {
   background-color: #27293d;
   border-radius: 4px;
@@ -150,4 +162,41 @@ nav {
   font-size: 28px;
   font-weight: 100;
   padding: 10px 0 0 20px;
+}
+
+@media only screen 
+  and (min-device-width: 375px) 
+  and (max-device-width: 667px) 
+  and (-webkit-min-device-pixel-ratio: 2) { 
+
+  nav {
+    display: none;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .dashboard-wrapper {
+    padding: 0;
+    grid-template-columns: 100%;
+  }
+
+  .chart-card__subtitle {
+    font-size: 16px;
+  }
+
+  .sub-chart {
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+  }
+
+  .chart-holder {
+    padding: 0;
+  }
+
+  .subchart-holder {
+    padding: 0;
+  }
 }
