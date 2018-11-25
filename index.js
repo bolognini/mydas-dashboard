@@ -31,7 +31,7 @@ app.get('/', function(request, response) {
 app.get('/cpu', function(request, response) {
   let requestCpu = new sql.Request();
       
-  requestCpu.query('SELECT value FROM dbo.Random', function (err, dbresponse) {
+  requestCpu.query('SELECT currentuse FROM dbo.Cpu', function (err, dbresponse) {
       
     if (err) {
       console.error(err);
@@ -45,7 +45,7 @@ app.get('/cpu', function(request, response) {
 app.get('/ram', function(request, response) {
   let requestRam = new sql.Request();
 
-  requestRam.query('SELECT value FROM dbo.Random', function (err, dbresponse) {
+  requestRam.query('SELECT freememory FROM dbo.Ram', function (err, dbresponse) {
 
     if (err) {
       console.error(err);
@@ -59,7 +59,7 @@ app.get('/ram', function(request, response) {
 app.get('/gpu', function(request, response) {
   let requestGpu = new sql.Request();
 
-  requestGpu.query('SELECT value FROM dbo.Random', function (err, dbresponse) {
+  requestGpu.query('SELECT temperature FROM dbo.Gpu', function (err, dbresponse) {
 
     if (err) {
       console.error(err);
@@ -73,7 +73,7 @@ app.get('/gpu', function(request, response) {
 app.get('/hd', function(request, response) {
   let requestHd = new sql.Request();
 
-  requestHd.query('SELECT value FROM dbo.Random', function (err, dbresponse) {
+  requestHd.query('SELECT bytesread FROM dbo.Hd', function (err, dbresponse) {
 
     if (err) {
       console.error(err);
@@ -88,6 +88,20 @@ app.get('/correlation', function(request, response) {
   let requestCorrelation = new sql.Request();
 
   requestCorrelation.query('SELECT value FROM dbo.Random', function (err, dbresponse) {
+
+    if (err) {
+      console.error(err);
+      return
+    }
+
+    response.send(dbresponse.recordset);
+  })
+})
+
+app.get('/so', function(request, response) {
+  let requestSo = new sql.Request();
+
+  requestSo.query('SELECT namesystem FROM dbo.So', function (err, dbresponse) {
 
     if (err) {
       console.error(err);

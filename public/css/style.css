@@ -15,6 +15,68 @@ body {
   padding: 20px;
 }
 
+.menu-burger {
+  display: none;
+  background: #ba54f5;
+  border: 1px solid #e14eca;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  top: 25px;
+  right: 30px;
+  z-index: 1;
+}
+
+.burger {
+  position: relative;
+  display: block;
+  background: white;
+  width: 20px;
+  height: 2px;
+  top: 19px;
+  left: 10px;
+  transition: 0.5s ease-in-out;
+}
+
+.burger::before,
+.burger::after {
+  background: white;
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transition: 0.5s ease-in-out;
+}
+
+.burger::before {
+  top: -7px;
+}
+
+.burger::after {
+  bottom: -7px;
+}
+
+input {
+  display: none;
+}
+
+input:checked ~ label .burger {
+  transform: rotate(45deg);
+}
+
+input:checked ~ label .burger::before {
+  transform: rotate(90deg);
+  top: 0;
+}
+
+input:checked ~ label .burger::after {
+  transform: rotate(90deg);
+  bottom: 0;
+}
+
+
 nav {
   margin: 20px 30px 0 15px;
 }
@@ -26,6 +88,7 @@ nav {
 }
 
 .menu-arrow {
+  cursor: pointer;
   width: 0px;
   height: 0px;
   border-left: 5px solid transparent;
@@ -36,6 +99,7 @@ nav {
 }
 
 .dropdown {
+  cursor: pointer;
   position: relative;
   display: inline-block;
   height: 30px;
@@ -60,12 +124,24 @@ nav {
 }
 
 .dropdown-link {
+  display: block;
   text-decoration: none;
+  font-weight: bold;
   color: black;
+  transition: 0.2s ease-out;
+}
+
+.dropdown-link:hover {
+  color: rgb(136, 136, 136);
+  transition: 0.2s ease-out;
 }
 
 .show-dropdown-content {
   display: block;
+}
+
+.sidebar-wrapper {
+  width: 100%;
 }
 
 .sidebar {
@@ -73,6 +149,8 @@ nav {
   margin: 10px 10px 0 0;
   padding: 10px;
   border-radius: 4px;
+  position: sticky;
+  top: 20px;
 }
 
 .logo-wrapper {
@@ -124,7 +202,7 @@ nav {
 
 .sub-chart {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: calc(50% - 5px) calc(50% - 5px);
   grid-template-rows: 50% 50%;
   grid-gap: 10px;
   margin-top: 20px;
@@ -169,12 +247,29 @@ nav {
   and (max-device-width: 667px) 
   and (-webkit-min-device-pixel-ratio: 2) { 
 
+  .sidebar-open {
+    overflow: hidden;
+  }
+
+  .menu-burger {
+    display: block;
+  }
+
   nav {
     display: none;
   }
 
   .sidebar {
-    display: none;
+    height: 100vh;
+    width: 70%;
+    position: absolute;
+    left: -100%;
+    top: 0;
+    transition: left 0.2s ease-in-out;
+  }
+
+  .show-sidebar {
+    left: 0;
   }
 
   .dashboard-wrapper {

@@ -12,6 +12,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
   </head>
   <body>
+    <input id="menu-hamburguer" type="checkbox">
+    <label for="menu-hamburguer">
+      <div class="menu-burger">
+        <span class="burger"></span>
+      </div>
+    </label>
     <nav>
       <div class="nav__wrapper">
         <div class="dropdown" id="dropdown-trigger"></div>
@@ -22,54 +28,56 @@
       </div>
     </nav>
     <section class="dashboard-wrapper">
-      <aside class="sidebar">
-        <div class="logo-wrapper">
-          <a href="#" class="mydas-logo"></a>
-        </div>
-        <span class="line"></span>
-        <ul class="quotation-list">
-          <li class="quotation-item">
-            <img src="img/btc.svg" alt="Bitcoin Icon">
-            <p class="quotation-text">
-                1 BTC: US$
-              <span id="btc"></span>
-            </p>
-          </li>
-          <li class="quotation-item">
-            <img src="img/xrp.svg" alt="Ripple Icon">
-            <p class="quotation-text">
-                1 XRP: US$
-              <span id="xrp"></span>
-            </p>
-          </li>
-          <li class="quotation-item">
-            <img src="img/ltc.svg" alt="Litecoin Icon">
-            <p class="quotation-text">
-                1 LTC: US$
-              <span id="ltc"></span>
-            </p>
-          </li>
-          <li class="quotation-item">
-            <img src="img/eth.svg" alt="Ethereum Icon">
-            <p class="quotation-text">
-                1 ETH: US$
-              <span id="eth"></span>
-            </p>
-          </li>
-          <li class="quotation-item">
-            <img src="img/bch.svg" alt="Bitcoin Cash Icon">
-            <p class="quotation-text">
-                1 BCH: US$
-              <span id="bch"></span>
-            </p>
-          </li>
-        </ul>
-      </aside>
+      <div class="sidebar-wrapper">
+        <aside class="sidebar" id="sidebar">
+            <div class="logo-wrapper">
+              <a href="#" class="mydas-logo"></a>
+            </div>
+            <span class="line"></span>
+            <ul class="quotation-list">
+              <li class="quotation-item">
+                <img src="img/btc.svg" alt="Bitcoin Icon">
+                <p class="quotation-text">
+                    1 BTC: US$
+                  <span id="btc"></span>
+                </p>
+              </li>
+              <li class="quotation-item">
+                <img src="img/xrp.svg" alt="Ripple Icon">
+                <p class="quotation-text">
+                    1 XRP: US$
+                  <span id="xrp"></span>
+                </p>
+              </li>
+              <li class="quotation-item">
+                <img src="img/ltc.svg" alt="Litecoin Icon">
+                <p class="quotation-text">
+                    1 LTC: US$
+                  <span id="ltc"></span>
+                </p>
+              </li>
+              <li class="quotation-item">
+                <img src="img/eth.svg" alt="Ethereum Icon">
+                <p class="quotation-text">
+                    1 ETH: US$
+                  <span id="eth"></span>
+                </p>
+              </li>
+              <li class="quotation-item">
+                <img src="img/bch.svg" alt="Bitcoin Cash Icon">
+                <p class="quotation-text">
+                    1 BCH: US$
+                  <span id="bch"></span>
+                </p>
+              </li>
+            </ul>
+          </aside>
+      </div>
       <section class="graphic-wrapper">
         <div class="main-chart">
           <div class="main-chart__card">
-            <h5 class="chart-card__title">Dados da máquina</h5>
-            <h2 class="chart-card__subtitle">Performance da CPU</h2>
+            <h5 class="chart-card__title" id="name-system">Dados da máquina</h5>
+            <h2 class="chart-card__subtitle">Performance da CPU (%)</h2>
             <div class="chart-holder">
               <canvas id="cpuChart"></canvas>
             </div>
@@ -77,19 +85,19 @@
         </div>
         <div class="sub-chart">
           <div class="sub-chart__card">
-            <h2 class="chart-card__subtitle">Uso da RAM</h2>
+            <h2 class="chart-card__subtitle">Uso da RAM (%)</h2>
             <div class="subchart-holder">
               <canvas id="ramChart"></canvas>
             </div>
           </div>
           <div class="sub-chart__card">
-            <h2 class="chart-card__subtitle">Uso da GPU</h2>
+            <h2 class="chart-card__subtitle">Uso da GPU (%)</h2>
             <div class="subchart-holder">
               <canvas id="gpuChart"></canvas>
             </div>
           </div>
           <div class="sub-chart__card">
-            <h2 class="chart-card__subtitle">Uso do HD</h2>
+            <h2 class="chart-card__subtitle">Uso do HD (%)</h2>
             <div class="subchart-holder">
               <canvas id="hdChart"></canvas>
             </div>

@@ -274,9 +274,8 @@
     })
     .then(data => {
       pointsCpu = data.map((item) => {
-        return item.value
+        return item.currentuse
       })
-      console.log(pointsCpu);
       
       initCpuChart()
     })
@@ -288,7 +287,7 @@
     })
     .then(data => {
       pointsRam = data.map(function(item) {
-        return item.value
+        return item.freememory
       })
       initRamChart()
     })
@@ -300,7 +299,7 @@
     })
     .then(data => {
       pointsGpu = data.map(function(item) {
-        return item.value
+        return item.temperature
       })
       initGpuChart()
     })
@@ -312,7 +311,7 @@
     })
     .then(data => {
       pointsHd = data.map(function(item) {
-        return item.value
+        return item.bytesread
       })
       initHdChart()
     })
@@ -331,6 +330,8 @@
     .catch(error => console.log(error))
 
   // Bitcoin Quotation
+
+  
 
   axios.get('https://www.bitstamp.net/api/v2/ticker_hour/btcusd/')
     .then(response => {
@@ -391,7 +392,7 @@ axios.get('https://www.bitstamp.net/api/v2/ticker_hour/ethusd/')
 
 
 function quotationEth(data) {
-document.getElementById("eth").innerHTML = data; 
+  document.getElementById("eth").innerHTML = data; 
 }
 
 // BitcoinCash Quotation
@@ -405,9 +406,22 @@ axios.get('https://www.bitstamp.net/api/v2/ticker_hour/bchusd/')
 })
 .catch(error => console.log(error))
 
-
 function quotationBch(data) {
-document.getElementById("bch").innerHTML = data; 
+  document.getElementById("bch").innerHTML = data; 
+}
+
+axios.get('/so')
+.then(response => {
+  // return response.data.last
+  console.log(response.data.last[0])
+})
+.then(data => {
+  nameSystem(data)
+})
+.catch(error => console.log(error))
+
+function nameSystem(data) {
+  document.getElementById("name-system").innerHTML = data; 
 }
 
   function addData(chart, label, data) {
@@ -439,11 +453,15 @@ document.getElementById("bch").innerHTML = data;
       return;
     }
 
-    if(cpuChart.data.datasets[0].data.length > 40 ) {
+    if(cpuChart.data.datasets[0].data.length > 15 ) {
       shiftData(cpuChart)
     }
 
-    addData(cpuChart, '', pointsCpu.shift())
+    const date = new Date;
+    const minutes = date.getMinutes();
+    const hour = date.getHours();
+
+    addData(cpuChart, `${hour}:${( minutes < 10 ? '0' : '' ) + minutes}`, pointsCpu.shift())
 
   }, 100)
 
@@ -452,11 +470,15 @@ document.getElementById("bch").innerHTML = data;
       return;
     }
 
-    if(ramChart.data.datasets[0].data.length > 40 ) {
+    if(ramChart.data.datasets[0].data.length > 15 ) {
       shiftData(ramChart)
     }
 
-    addData(ramChart, '', pointsRam.shift())
+    const date = new Date;
+    const minutes = date.getMinutes();
+    const hour = date.getHours();
+
+    addData(ramChart, `${hour}:${( minutes < 10 ? '0' : '' ) + minutes}`, pointsRam.shift())
 
   }, 100)
   
@@ -465,11 +487,15 @@ document.getElementById("bch").innerHTML = data;
       return;
     }
 
-    if(gpuChart.data.datasets[0].data.length > 40 ) {
+    if(gpuChart.data.datasets[0].data.length > 15 ) {
       shiftData(gpuChart)
     }
 
-    addData(gpuChart, '', pointsGpu.shift())
+    const date = new Date;
+    const minutes = date.getMinutes();
+    const hour = date.getHours();
+
+    addData(gpuChart, `${hour}:${( minutes < 10 ? '0' : '' ) + minutes}`, pointsGpu.shift())
 
   }, 100)
 
@@ -478,11 +504,15 @@ document.getElementById("bch").innerHTML = data;
       return;
     }
 
-    if(hdChart.data.datasets[0].data.length > 40 ) {
+    if(hdChart.data.datasets[0].data.length > 15 ) {
       shiftData(hdChart)
     }
 
-    addData(hdChart, '', pointsHd.shift())
+    const date = new Date;
+    const minutes = date.getMinutes();
+    const hour = date.getHours();
+
+    addData(hdChart, `${hour}:${( minutes < 10 ? '0' : '' ) + minutes}`, pointsHd.shift())
 
   }, 100)
 
@@ -491,25 +521,43 @@ document.getElementById("bch").innerHTML = data;
       return;
     }
 
-    if(correlationChart.data.datasets[0].data.length > 40 ) {
+    if(correlationChart.data.datasets[0].data.length > 15 ) {
       shiftData(correlationChart)
     }
 
-    addData(correlationChart, '', pointsCorrelation.shift())
+    const date = new Date;
+    const minutes = date.getMinutes();
+    const hour = date.getHours();
+
+    addData(correlationChart, `${hour}:${( minutes < 10 ? '0' : '' ) + minutes}`, pointsCorrelation.shift())
 
   }, 100)
 
-
-  const showDropdownMenu = () => {
+  const toggleMenu = () => {
     var element = document.getElementById('icon-menu');
+
+    if(element.classList.contains("show-dropdown-content")) {
+      element.classList.remove("show-dropdown-content");
+      return
+    }
+
     element.classList.add("show-dropdown-content");
   }
 
-  const removeDropdownMenu = () => {
-    var element = document.getElementById('icon-menu');
-    element.classList.remove("show-dropdown-content");
+  const toggleSideBar = () => {
+    var element = document.getElementById('sidebar');
+    var body = document.getElementsByTagName('body')[0];
+
+    if(element.classList.contains("show-sidebar")) {
+      element.classList.remove("show-sidebar");
+      body.classList.remove("sidebar-open");
+      return
+    }
+
+    element.classList.add("show-sidebar");
+    body.classList.add("sidebar-open");
   }
 
-  document.getElementById('dropdown-trigger').addEventListener('click', showDropdownMenu)
-  document.getElementById('dropdown-trigger').addEventListener('mouseover', removeDropdownMenu)
+  document.getElementById('dropdown-trigger').addEventListener('click', toggleMenu)
+  document.getElementById('menu-hamburguer').addEventListener('click', toggleSideBar)
 })();
