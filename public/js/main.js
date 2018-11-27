@@ -10,7 +10,8 @@
   let ramChart;
   let gpuChart;
   let hdChart;
-  let correlationChart;
+
+  let deviceId = window.location.pathname.split('/')[1]
 
   const initCpuChart = function() {
     var ctx = document.getElementById("cpuChart").getContext('2d');
@@ -216,59 +217,8 @@
       }
     });
   }
-
-  const initCorrelationChart = function() {
-    var ctx = document.getElementById("correlationChart").getContext('2d');
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
-    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
-    correlationChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: [],
-        datasets: [{
-          label: '# of Votes',
-          data: [],
-          backgroundColor: gradientStroke,
-          borderColor: '#d346b1',
-          borderWidth: 2,
-          fill: true,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          pointBackgroundColor: '#d346b1',
-          pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#d346b1',
-          pointBorderWidth: 20,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 15,
-          pointRadius: 3
-        }]
-      },
-      options: {
-        legend: {
-          display: false
-        },
-        tooltips: {
-          callbacks: {
-             label: function(tooltipItem) {
-                return tooltipItem.yLabel;
-            }
-          }
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero:true
-            }
-          }]
-        }
-      }
-    });
-  }
   
-  axios.get('/cpu')
+  axios.get(`/cpu?deviceId=${deviceId}`)
     .then(response => {
       return response.data
     })
@@ -281,7 +231,7 @@
     })
     .catch(error => console.log(error))
 
-  axios.get('/ram')
+  axios.get(`/ram?deviceId=${deviceId}`)
     .then(response => {
       return response.data
     })
@@ -293,7 +243,7 @@
     })
     .catch(error => console.log(error))
   
-  axios.get('/gpu')
+  axios.get(`/gpu?deviceId=${deviceId}`)
     .then(response => {
       return response.data
     })
@@ -305,7 +255,7 @@
     })
     .catch(error => console.log(error))
   
-  axios.get('/hd')
+  axios.get(`/hd?deviceId=${deviceId}`)
     .then(response => {
       return response.data
     })
@@ -314,18 +264,6 @@
         return item.bytesread
       })
       initHdChart()
-    })
-    .catch(error => console.log(error))
-
-  axios.get('/correlation')
-    .then(response => {
-      return response.data
-    })
-    .then(data => {
-      pointsCorrelation = data.map(function(item) {
-        return item.value
-      })
-      initCorrelationChart()
     })
     .catch(error => console.log(error))
 
@@ -412,8 +350,8 @@ function quotationBch(data) {
 
 axios.get('/so')
 .then(response => {
-  // return response.data.last
-  console.log(response.data.last[0])
+  return response.data[0].namesystem
+  // console.log(response.data[0].namesystem)
 })
 .then(data => {
   nameSystem(data)
@@ -422,6 +360,7 @@ axios.get('/so')
 
 function nameSystem(data) {
   document.getElementById("name-system").innerHTML = data; 
+  document.getElementById("name-system-again").innerHTML = data; 
 }
 
   function addData(chart, label, data) {
@@ -513,23 +452,6 @@ function nameSystem(data) {
     const hour = date.getHours();
 
     addData(hdChart, `${hour}:${( minutes < 10 ? '0' : '' ) + minutes}`, pointsHd.shift())
-
-  }, 100)
-
-  setInterval(function() {
-    if(pointsCorrelation.length == 0) {
-      return;
-    }
-
-    if(correlationChart.data.datasets[0].data.length > 15 ) {
-      shiftData(correlationChart)
-    }
-
-    const date = new Date;
-    const minutes = date.getMinutes();
-    const hour = date.getHours();
-
-    addData(correlationChart, `${hour}:${( minutes < 10 ? '0' : '' ) + minutes}`, pointsCorrelation.shift())
 
   }, 100)
 

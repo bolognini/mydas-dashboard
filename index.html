@@ -70,13 +70,15 @@
                   <span id="bch"></span>
                 </p>
               </li>
+              <span class="bottom-line"></span>
+              <a href="#" class="sidebar-logout">Log out</a>
             </ul>
           </aside>
       </div>
       <section class="graphic-wrapper">
         <div class="main-chart">
           <div class="main-chart__card">
-            <h5 class="chart-card__title" id="name-system">Dados da máquina</h5>
+            <h5 class="chart-card__title">Dados da máquina de <span id="name-system"></span></h5>
             <h2 class="chart-card__subtitle">Performance da CPU (%)</h2>
             <div class="chart-holder">
               <canvas id="cpuChart"></canvas>
@@ -96,16 +98,13 @@
               <canvas id="gpuChart"></canvas>
             </div>
           </div>
-          <div class="sub-chart__card">
-            <h2 class="chart-card__subtitle">Uso do HD (%)</h2>
-            <div class="subchart-holder">
+        </div>
+        <div class="main-chart">
+          <div class="main-chart__card">
+            <h5 class="chart-card__title">Dados da máquina de <span id="name-system-again"></span></h5>
+            <h2 class="chart-card__subtitle">Performance do HD (%)</h2>
+            <div class="chart-holder">
               <canvas id="hdChart"></canvas>
-            </div>
-          </div>
-          <div class="sub-chart__card">
-            <h2 class="chart-card__subtitle">Downtime</h2>
-            <div class="subchart-holder">
-              <canvas id="correlationChart"></canvas>
             </div>
           </div>
         </div>

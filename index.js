@@ -14,6 +14,8 @@ const config = {
   }
 }
 
+let deviceId;
+
 app.use(express.static(__dirname + '/public'));
 
 sql.close()
@@ -29,9 +31,10 @@ app.get('/', function(request, response) {
 });
 
 app.get('/cpu', function(request, response) {
+  deviceId = request.query.deviceId;
   let requestCpu = new sql.Request();
       
-  requestCpu.query('SELECT currentuse FROM dbo.Cpu', function (err, dbresponse) {
+  requestCpu.query(`SELECT currentuse FROM dbo.Cpu WHERE deviceid = ${deviceId}`, function (err, dbresponse) {
       
     if (err) {
       console.error(err);
@@ -43,9 +46,10 @@ app.get('/cpu', function(request, response) {
 })
 
 app.get('/ram', function(request, response) {
+  deviceId = request.query.deviceId;
   let requestRam = new sql.Request();
 
-  requestRam.query('SELECT freememory FROM dbo.Ram', function (err, dbresponse) {
+  requestRam.query(`SELECT freememory FROM dbo.Ram WHERE deviceid = ${deviceId}`, function (err, dbresponse) {
 
     if (err) {
       console.error(err);
@@ -57,9 +61,10 @@ app.get('/ram', function(request, response) {
 })
 
 app.get('/gpu', function(request, response) {
+  deviceId = request.query.deviceId;
   let requestGpu = new sql.Request();
 
-  requestGpu.query('SELECT temperature FROM dbo.Gpu', function (err, dbresponse) {
+  requestGpu.query(`SELECT temperature FROM dbo.Gpu WHERE deviceid = ${deviceId}`, function (err, dbresponse) {
 
     if (err) {
       console.error(err);
@@ -71,23 +76,10 @@ app.get('/gpu', function(request, response) {
 })
 
 app.get('/hd', function(request, response) {
+  deviceId = request.query.deviceId;
   let requestHd = new sql.Request();
 
-  requestHd.query('SELECT bytesread FROM dbo.Hd', function (err, dbresponse) {
-
-    if (err) {
-      console.error(err);
-      return
-    }
-
-    response.send(dbresponse.recordset);
-  })
-})
-
-app.get('/correlation', function(request, response) {
-  let requestCorrelation = new sql.Request();
-
-  requestCorrelation.query('SELECT value FROM dbo.Random', function (err, dbresponse) {
+  requestHd.query(`SELECT bytesread FROM dbo.Hd WHERE deviceid = ${deviceId}`, function (err, dbresponse) {
 
     if (err) {
       console.error(err);
@@ -99,9 +91,10 @@ app.get('/correlation', function(request, response) {
 })
 
 app.get('/so', function(request, response) {
+  // deviceId = request.query.deviceId;
   let requestSo = new sql.Request();
 
-  requestSo.query('SELECT namesystem FROM dbo.So', function (err, dbresponse) {
+  requestSo.query(`SELECT namesystem FROM dbo.So`, function (err, dbresponse) {
 
     if (err) {
       console.error(err);
@@ -111,5 +104,9 @@ app.get('/so', function(request, response) {
     response.send(dbresponse.recordset);
   })
 })
+
+app.use(function(request, response){
+  response.sendFile(path.join(__dirname + '/index.html'));
+});
 
 app.listen(3000);

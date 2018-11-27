@@ -153,6 +153,10 @@ nav {
   top: 20px;
 }
 
+.sidebar-logout {
+  display: none;
+}
+
 .logo-wrapper {
   margin-bottom: 10px;
 }
@@ -163,6 +167,10 @@ nav {
   width: 140px;
   background-color: #eee;
   margin: 5px auto;
+}
+
+.bottom-line {
+  display: none;
 }
 
 .mydas-logo {
@@ -203,9 +211,8 @@ nav {
 .sub-chart {
   display: grid;
   grid-template-columns: calc(50% - 5px) calc(50% - 5px);
-  grid-template-rows: 50% 50%;
   grid-gap: 10px;
-  margin-top: 20px;
+  margin: 20px 0 20px 0;
 }
 
 .chart-holder {
@@ -243,7 +250,7 @@ nav {
 }
 
 @media only screen 
-  and (min-device-width: 375px) 
+  and (min-device-width: 320px) 
   and (max-device-width: 667px) 
   and (-webkit-min-device-pixel-ratio: 2) { 
 
@@ -272,6 +279,22 @@ nav {
     left: 0;
   }
 
+  .sidebar-logout {
+    display: block;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    margin-top: 30px;
+  }
+
+  .bottom-line {
+    display: block;
+    height: 1px;
+    width: 140px;
+    background-color: #eee;
+    margin: 5px auto;
+  }
+
   .dashboard-wrapper {
     padding: 0;
     grid-template-columns: 100%;
@@ -283,7 +306,7 @@ nav {
 
   .sub-chart {
     grid-template-columns: 100%;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     grid-gap: 20px;
   }
 
@@ -294,4 +317,42 @@ nav {
   .subchart-holder {
     padding: 0;
   }
+}
+
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+    .dashboard-wrapper {
+      grid-template-columns: 30% 70%;
+    }
+
+    .chart-holder {
+      padding: 15px;
+    }
+
+    .subchart-holder {
+      padding: 4px;
+    }
+
+    .sidebar {
+      height: calc(100% - 4.5%);
+    }
+
+    .sidebar-logout {
+      display: block;
+      text-decoration: none;
+      color: white;
+      font-size: 18px;
+      margin-top: 30px;
+    }
+  
+    .bottom-line {
+      display: block;
+      height: 1px;
+      width: 140px;
+      background-color: #eee;
+      margin: 5px auto;
+    }
 }
