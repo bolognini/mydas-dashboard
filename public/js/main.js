@@ -332,27 +332,27 @@
 
   function quotationBtc(data) {
     data = data * real
-    document.getElementById("btc").innerHTML = data; 
+    document.getElementById("btc").innerHTML = data.toFixed(2); 
   }
   
   function quotationXrp(data) {
     data = data * real
-    document.getElementById("xrp").innerHTML = data; 
+    document.getElementById("xrp").innerHTML = data.toFixed(2);
   }
 
   function quotationLtc(data) {
     data = data * real
-    document.getElementById("ltc").innerHTML = data; 
+    document.getElementById("ltc").innerHTML = data.toFixed(2);
   }
 
   function quotationEth(data) {
     data = data * real
-    document.getElementById("eth").innerHTML = data; 
+    document.getElementById("eth").innerHTML = data.toFixed(2);
   }
 
   function quotationBch(data) {
     data = data * real
-    document.getElementById("bch").innerHTML = data;
+    document.getElementById("bch").innerHTML = data.toFixed(2);
   }
 
   axios.get('/so')
