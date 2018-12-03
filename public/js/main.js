@@ -10,6 +10,7 @@
   let ramChart;
   let gpuChart;
   let hdChart;
+  let real;
 
   let deviceId = window.location.pathname.split('/')[1]
 
@@ -267,101 +268,107 @@
     })
     .catch(error => console.log(error))
 
-  // Bitcoin Quotation
+  //Exchange
 
-  
-
-  axios.get('https://www.bitstamp.net/api/v2/ticker_hour/btcusd/')
+  axios.get('https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=BRL&apikey=QOBJWGFELVZ99647')
     .then(response => {
-      return response.data.last
+    return response.data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
     })
     .then(data => {
-      quotationBtc(data)
+    real = data
+
+    // Bitcoin Quotation
+    axios.get('https://www.bitstamp.net/api/v2/ticker_hour/btcusd/')
+      .then(response => {
+        return response.data.last
+      })
+      .then(data => {
+        quotationBtc(data)
+      })
+      .catch(error => console.log(error)) 
+
+    // Ripple Quotation
+    axios.get('https://www.bitstamp.net/api/v2/ticker_hour/xrpusd/')
+      .then(response => {
+        return response.data.last
+      })
+      .then(data => {
+        quotationXrp(data)
+      })
+      .catch(error => console.log(error))
+
+    // Litecoin Quotation
+    axios.get('https://www.bitstamp.net/api/v2/ticker_hour/ltcusd/')
+      .then(response => {
+        return response.data.last
+      })
+      .then(data => {
+        quotationLtc(data)
+      })
+      .catch(error => console.log(error))
+
+    // Ethereum Quotation
+    axios.get('https://www.bitstamp.net/api/v2/ticker_hour/ethusd/')
+      .then(response => {
+        return response.data.last
+      })
+      .then(data => {
+        quotationEth(data)
+      })
+      .catch(error => console.log(error))
+      
+      // Bitcoin Cash Quotation
+    axios.get('https://www.bitstamp.net/api/v2/ticker_hour/bchusd/')
+      .then(response => {
+        return response.data.last
+      })
+      .then(data => {
+        quotationBch(data)
+      })
+      .catch(error => console.log(error))
+
     })
     .catch(error => console.log(error))
 
-  
   function quotationBtc(data) {
+    data = data * real
     document.getElementById("btc").innerHTML = data; 
   }
-
-  // Ripple Quotation
-
-  axios.get('https://www.bitstamp.net/api/v2/ticker_hour/xrpusd/')
-    .then(response => {
-      return response.data.last
-    })
-    .then(data => {
-      quotationXrp(data)
-    })
-    .catch(error => console.log(error))
-
   
   function quotationXrp(data) {
+    data = data * real
     document.getElementById("xrp").innerHTML = data; 
   }
 
-  // Litecoin Quotation
+  function quotationLtc(data) {
+    data = data * real
+    document.getElementById("ltc").innerHTML = data; 
+  }
 
-  axios.get('https://www.bitstamp.net/api/v2/ticker_hour/ltcusd/')
+  function quotationEth(data) {
+    data = data * real
+    document.getElementById("eth").innerHTML = data; 
+  }
+
+  function quotationBch(data) {
+    data = data * real
+    document.getElementById("bch").innerHTML = data;
+  }
+
+  axios.get('/so')
   .then(response => {
-    return response.data.last
+    return response.data[0].namesystem
+    // console.log(response.data[0].namesystem)
   })
   .then(data => {
-    quotationLtc(data)
+    nameSystem(data)
   })
   .catch(error => console.log(error))
 
-
-function quotationLtc(data) {
-  document.getElementById("ltc").innerHTML = data; 
-}
-
-// Ethereum Quotation
-
-axios.get('https://www.bitstamp.net/api/v2/ticker_hour/ethusd/')
-.then(response => {
-  return response.data.last
-})
-.then(data => {
-  quotationEth(data)
-})
-.catch(error => console.log(error))
-
-
-function quotationEth(data) {
-  document.getElementById("eth").innerHTML = data; 
-}
-
-// BitcoinCash Quotation
-
-axios.get('https://www.bitstamp.net/api/v2/ticker_hour/bchusd/')
-.then(response => {
-  return response.data.last
-})
-.then(data => {
-  quotationBch(data)
-})
-.catch(error => console.log(error))
-
-function quotationBch(data) {
-  document.getElementById("bch").innerHTML = data; 
-}
-
-axios.get('/so')
-.then(response => {
-  return response.data[0].namesystem
-  // console.log(response.data[0].namesystem)
-})
-.then(data => {
-  nameSystem(data)
-})
-.catch(error => console.log(error))
-
-function nameSystem(data) {
-  document.getElementById("name-system").innerHTML = data; 
-  document.getElementById("name-system-again").innerHTML = data; 
-}
+  function nameSystem(data) {
+    document.getElementById("name-system").innerHTML = data; 
+    document.getElementById("name-system-again").innerHTML = data; 
+  }
 
   function addData(chart, label, data) {
     chart.data.labels.push(label);
