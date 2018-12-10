@@ -5,7 +5,6 @@
   let pointsRam = [];
   let pointsGpu = [];
   let pointsHd = [];
-  let pointsCorrelation =[];
   let cpuChart;
   let ramChart;
   let gpuChart;
@@ -18,9 +17,9 @@
     var ctx = document.getElementById("cpuChart").getContext('2d');
     var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
-    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
-    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
+    gradientStroke.addColorStop(1, 'rgba(255, 69, 135,0.1)');
+    gradientStroke.addColorStop(0.4, 'rgba(188, 82, 126, 0)');
+    gradientStroke.addColorStop(0, 'rgba(226, 99, 152, 0)')
     cpuChart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -29,14 +28,14 @@
           label: '# of Votes',
           data: [],
           backgroundColor: gradientStroke,
-          borderColor: '#d346b1',
+          borderColor: '#ff4587',
           borderWidth: 2,
           fill: true,
           borderDash: [],
           borderDashOffset: 0.0,
-          pointBackgroundColor: '#d346b1',
+          pointBackgroundColor: '#ff4587',
           pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#d346b1',
+          pointHoverBackgroundColor: '#ff4587',
           pointBorderWidth: 20,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
@@ -70,9 +69,9 @@
     var ctx = document.getElementById("ramChart").getContext('2d');
     var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
-    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
-    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
+    gradientStroke.addColorStop(1, 'rgba(255, 69, 135,0.1)');
+    gradientStroke.addColorStop(0.4, 'rgba(188, 82, 126, 0)');
+    gradientStroke.addColorStop(0, 'rgba(226, 99, 152, 0)')
     ramChart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -81,14 +80,14 @@
           label: '# of Votes',
           data: [],
           backgroundColor: gradientStroke,
-          borderColor: '#d346b1',
+          borderColor: '#ff4587',
           borderWidth: 2,
           fill: true,
           borderDash: [],
           borderDashOffset: 0.0,
-          pointBackgroundColor: '#d346b1',
+          pointBackgroundColor: '#ff4587',
           pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#d346b1',
+          pointHoverBackgroundColor: '#ff4587',
           pointBorderWidth: 20,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
@@ -121,9 +120,9 @@
     var ctx = document.getElementById("gpuChart").getContext('2d');
     var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
-    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
-    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
+    gradientStroke.addColorStop(1, 'rgba(255, 69, 135,0.1)');
+    gradientStroke.addColorStop(0.4, 'rgba(188, 82, 126, 0)');
+    gradientStroke.addColorStop(0, 'rgba(226, 99, 152, 0)')
     gpuChart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -132,14 +131,14 @@
           label: '# of Votes',
           data: [],
           backgroundColor: gradientStroke,
-          borderColor: '#d346b1',
+          borderColor: '#ff4587',
           borderWidth: 2,
           fill: true,
           borderDash: [],
           borderDashOffset: 0.0,
-          pointBackgroundColor: '#d346b1',
+          pointBackgroundColor: '#ff4587',
           pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#d346b1',
+          pointHoverBackgroundColor: '#ff4587',
           pointBorderWidth: 20,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
@@ -172,9 +171,9 @@
     var ctx = document.getElementById("hdChart").getContext('2d');
     var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
-    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
-    gradientStroke.addColorStop(0.4, 'rgba(72,72,176,0.0)');
-    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)')
+    gradientStroke.addColorStop(1, 'rgba(255, 69, 135,0.1)');
+    gradientStroke.addColorStop(0.4, 'rgba(188, 82, 126, 0)');
+    gradientStroke.addColorStop(0, 'rgba(226, 99, 152, 0)')
     hdChart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -183,14 +182,14 @@
           label: '# of Votes',
           data: [],
           backgroundColor: gradientStroke,
-          borderColor: '#d346b1',
+          borderColor: '#ff4587',
           borderWidth: 2,
           fill: true,
           borderDash: [],
           borderDashOffset: 0.0,
-          pointBackgroundColor: '#d346b1',
+          pointBackgroundColor: '#ff4587',
           pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#d346b1',
+          pointHoverBackgroundColor: '#ff4587',
           pointBorderWidth: 20,
           pointHoverRadius: 4,
           pointHoverBorderWidth: 15,
