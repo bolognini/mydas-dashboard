@@ -1,13 +1,22 @@
 {
+  "name": "umbler-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
   "dependencies": {
     "axios": "^0.18.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "mssql": "^4.2.3",
-    "nodemon": "^1.18.6"
+    "nodemon": "^1.18.6",
+    "check-node-version": "^2.1.0",
+    "cluster": "^0.7.7",
+    "os": "^0.1.1"
   },
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
-  }
+  },
+  "author": "Matheus Bolognini",
+  "license": "ISC"
 }
