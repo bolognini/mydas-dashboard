@@ -34,7 +34,7 @@ app.get('/cpu', function(request, response) {
   deviceId = request.query.deviceId;
   let requestCpu = new sql.Request();
       
-  requestCpu.query(`SELECT currentuse FROM dbo.Cpu WHERE deviceid = ${deviceId}`, function (err, dbresponse) {
+  requestCpu.query(`SELECT currentuse, model FROM dbo.Cpu WHERE deviceid = ${deviceId}`, function (err, dbresponse) {
       
     if (err) {
       console.error(err);
@@ -49,7 +49,7 @@ app.get('/ram', function(request, response) {
   deviceId = request.query.deviceId;
   let requestRam = new sql.Request();
 
-  requestRam.query(`SELECT freememory FROM dbo.Ram WHERE deviceid = ${deviceId}`, function (err, dbresponse) {
+  requestRam.query(`SELECT totalmemory, currentuse FROM dbo.Ram WHERE deviceid = ${deviceId}`, function (err, dbresponse) {
 
     if (err) {
       console.error(err);
@@ -64,22 +64,7 @@ app.get('/gpu', function(request, response) {
   deviceId = request.query.deviceId;
   let requestGpu = new sql.Request();
 
-  requestGpu.query(`SELECT temperature FROM dbo.Gpu WHERE deviceid = ${deviceId}`, function (err, dbresponse) {
-
-    if (err) {
-      console.error(err);
-      return
-    }
-
-    response.send(dbresponse.recordset);
-  })
-})
-
-app.get('/hd', function(request, response) {
-  deviceId = request.query.deviceId;
-  let requestHd = new sql.Request();
-
-  requestHd.query(`SELECT bytesread FROM dbo.Hd WHERE deviceid = ${deviceId}`, function (err, dbresponse) {
+  requestGpu.query(`SELECT temperature, name FROM dbo.Gpu WHERE deviceid = ${deviceId}`, function (err, dbresponse) {
 
     if (err) {
       console.error(err);

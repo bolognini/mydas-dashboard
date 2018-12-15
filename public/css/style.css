@@ -291,9 +291,16 @@ nav {
   padding: 10px 0 0 20px;
 }
 
-.chart-card__subtitle {
+.mainchart-card__subtitle {
   color: rgb(71, 71, 71);
   font-size: 28px;
+  font-weight: 100;
+  padding: 10px 0 0 20px;
+}
+
+.chart-card__subtitle {
+  color: rgb(71, 71, 71);
+  font-size: 20px;
   font-weight: 100;
   padding: 10px 0 0 20px;
 }

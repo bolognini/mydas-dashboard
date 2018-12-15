@@ -4,11 +4,9 @@
   let pointsCpu = [];
   let pointsRam = [];
   let pointsGpu = [];
-  let pointsHd = [];
   let cpuChart;
   let ramChart;
   let gpuChart;
-  let hdChart;
   let real;
 
   let deviceId = window.location.pathname.split('/')[1]
@@ -166,63 +164,13 @@
       }
     });
   }
-
-  const initHdChart = function() {
-    var ctx = document.getElementById("hdChart").getContext('2d');
-    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
-
-    gradientStroke.addColorStop(1, 'rgba(255, 69, 135,0.1)');
-    gradientStroke.addColorStop(0.4, 'rgba(188, 82, 126, 0)');
-    gradientStroke.addColorStop(0, 'rgba(226, 99, 152, 0)')
-    hdChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: [],
-        datasets: [{
-          label: '# of Votes',
-          data: [],
-          backgroundColor: gradientStroke,
-          borderColor: '#ff4587',
-          borderWidth: 2,
-          fill: true,
-          borderDash: [],
-          borderDashOffset: 0.0,
-          pointBackgroundColor: '#ff4587',
-          pointBorderColor: 'rgba(255,255,255,0)',
-          pointHoverBackgroundColor: '#ff4587',
-          pointBorderWidth: 20,
-          pointHoverRadius: 4,
-          pointHoverBorderWidth: 15,
-          pointRadius: 3
-        }]
-      },
-      options: {
-        legend: {
-          display: false
-        },
-        tooltips: {
-          callbacks: {
-             label: function(tooltipItem) {
-                return tooltipItem.yLabel;
-            }
-          }
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero:true
-            }
-          }]
-        }
-      }
-    });
-  }
   
   axios.get(`/cpu?deviceId=${deviceId}`)
     .then(response => {
       return response.data
     })
     .then(data => {
+      modelCPU(data[0].model)
       pointsCpu = data.map((item) => {
         return item.currentuse
       })
@@ -231,41 +179,44 @@
     })
     .catch(error => console.log(error))
 
+  function modelCPU(data) {
+    document.getElementById("model-cpu").innerHTML = data;
+  }
+
   axios.get(`/ram?deviceId=${deviceId}`)
     .then(response => {
       return response.data
     })
     .then(data => {
+      console.log(data)
+      totalMemoryRam(data[0].totalmemory)
       pointsRam = data.map(function(item) {
-        return item.freememory
+        return item.currentuse
       })
       initRamChart()
     })
     .catch(error => console.log(error))
+
+  function totalMemoryRam(data) {
+    document.getElementById("ram-totalmemory").innerHTML = data;
+  }
   
   axios.get(`/gpu?deviceId=${deviceId}`)
     .then(response => {
       return response.data
     })
     .then(data => {
+      nameGPU(data[0].name)
       pointsGpu = data.map(function(item) {
         return item.temperature
       })
       initGpuChart()
     })
     .catch(error => console.log(error))
-  
-  axios.get(`/hd?deviceId=${deviceId}`)
-    .then(response => {
-      return response.data
-    })
-    .then(data => {
-      pointsHd = data.map(function(item) {
-        return item.bytesread
-      })
-      initHdChart()
-    })
-    .catch(error => console.log(error))
+
+  function nameGPU(data) {
+    document.getElementById("name-gpu").innerHTML = data;
+  }
 
   //Exchange
 
@@ -441,23 +392,6 @@
     const hour = date.getHours();
 
     addData(gpuChart, `${hour}:${( minutes < 10 ? '0' : '' ) + minutes}`, pointsGpu.shift())
-
-  }, 100)
-
-  setInterval(function() {
-    if(pointsHd.length == 0) {
-      return;
-    }
-
-    if(hdChart.data.datasets[0].data.length > 15 ) {
-      shiftData(hdChart)
-    }
-
-    const date = new Date;
-    const minutes = date.getMinutes();
-    const hour = date.getHours();
-
-    addData(hdChart, `${hour}:${( minutes < 10 ? '0' : '' ) + minutes}`, pointsHd.shift())
 
   }, 100)
 
