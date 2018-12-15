@@ -359,7 +359,7 @@
 
     addData(cpuChart, `${hour}:${( minutes < 10 ? '0' : '' ) + minutes}`, pointsCpu.shift())
 
-  }, 100)
+  }, 500)
 
   setInterval(function() {
     if(pointsRam.length == 0) {
@@ -376,7 +376,7 @@
 
     addData(ramChart, `${hour}:${( minutes < 10 ? '0' : '' ) + minutes}`, pointsRam.shift())
 
-  }, 100)
+  }, 500)
   
   setInterval(function() {
     if(pointsGpu.length == 0) {
@@ -393,7 +393,7 @@
 
     addData(gpuChart, `${hour}:${( minutes < 10 ? '0' : '' ) + minutes}`, pointsGpu.shift())
 
-  }, 100)
+  }, 500)
 
   const toggleMenu = () => {
     var element = document.getElementById('icon-menu');
