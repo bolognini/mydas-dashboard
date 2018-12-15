@@ -340,7 +340,7 @@ nav {
     text-decoration: none;
     color: white;
     font-size: 18px;
-    margin-top: 30px;
+    margin-top: 10px;
   }
 
   .bottom-line {
@@ -354,6 +354,10 @@ nav {
   .dashboard-wrapper {
     padding: 0;
     grid-template-columns: 100%;
+  }
+
+  .mainchart-card__subtitle {
+    font-size: 16px;
   }
 
   .chart-card__subtitle {
@@ -393,22 +397,18 @@ nav {
     }
 
     .sidebar {
-      height: calc(100% - 50%);
+      height: calc(100% - 30%);
+    }
+
+    .big__line {
+      width: 170px;
     }
 
     .sidebar-logout {
-      display: block;
-      text-decoration: none;
-      color: white;
-      font-size: 18px;
-      margin-top: 30px;
+      display: none;
     }
   
     .bottom-line {
-      display: block;
-      height: 1px;
-      width: 140px;
-      background-color: #eee;
-      margin: 5px auto;
+      display: none;
     }
 }
