@@ -189,7 +189,7 @@ nav {
 }
 
 .logo-wrapper {
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 
 .line {
@@ -214,7 +214,7 @@ nav {
 
 .mydas-logo {
   width: 100%;
-  background-image: url(/img/mydas-logo.png);
+  background-image: url(/img/new-logo.png);
   display: block;
   height: 50px;
   background-size: contain;
@@ -224,7 +224,7 @@ nav {
 
 .quotation-title {
   text-align: center;
-  margin: 20px 0;
+  margin: 15px 0;
   color: #eee;
 }
 
